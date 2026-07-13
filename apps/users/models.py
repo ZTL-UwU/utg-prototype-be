@@ -23,7 +23,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255, null=True, blank=True)
     total_score = models.PositiveIntegerField(default=0)
     total_stars = models.PositiveIntegerField(default=0)
-    rewards = models.ManyToManyField(Reward, through="UserReward", related_name="users", blank=True)
+    rewards = models.ManyToManyField(
+        Reward,
+        through="UserReward",
+        through_fields=("user", "reward"),
+        related_name="users",
+        blank=True,
+    )
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -41,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class UserReward(models.Model):
+class UserReward(AuditingMixin, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reward_links")
     reward = models.ForeignKey(Reward, on_delete=models.CASCADE, related_name="user_links")
 
@@ -55,7 +61,7 @@ class UserReward(models.Model):
         return f"{self.user} - {self.reward}"
 
 
-class LevelResult(models.Model):
+class LevelResult(AuditingMixin, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="level_results")
     level = models.ForeignKey(
         "game.Level",
@@ -66,7 +72,6 @@ class LevelResult(models.Model):
     score = models.PositiveIntegerField()
     correct = models.PositiveIntegerField()
     mistake = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         db_table = "level_results"
