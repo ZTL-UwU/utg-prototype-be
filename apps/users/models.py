@@ -3,10 +3,11 @@ from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
+from apps.common.models import AuditingMixin
 from apps.users.managers import UserManager
 
 
-class Reward(models.Model):
+class Reward(AuditingMixin, models.Model):
     name = models.CharField(max_length=255)
     asset_path = models.CharField(max_length=255)
 
