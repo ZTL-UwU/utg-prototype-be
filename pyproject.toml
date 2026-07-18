@@ -16,6 +16,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "django-stubs>=5.2,<6",
+    "pytest>=9.1.1",
+    "pytest-django>=4.12.0",
     "ruff>=0.14,<1",
 ]
 
@@ -27,3 +29,7 @@ extend-exclude = ["migrations"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "DJ"]
 ignore = ["DJ001"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "*_test.py"]
