@@ -39,7 +39,7 @@ def test_list_units_nests_full_levels(client, seed):
     assert [lvl["sort_order"] for lvl in levels] == [1, 2]  # ordered by sort_order
     # mascot is a nested object (LevelOut), not just an id
     assert levels[0]["mascot"]["id"] == seed.mascot_camel.id
-    assert assert_matches_schema(levels[0]["mascot"], MascotOut)
+    assert_matches_schema(levels[0]["mascot"], MascotOut)
 
 
 ### /units/sidebar
