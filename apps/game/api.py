@@ -88,9 +88,16 @@ def list_units_by_layer(request, layer: Layer):
     )
 
 
-@router.get("/units/{unit_id}", response=UnitByIdOut, summary="Get a unit by ID")
+@router.get(
+    "/units/{unit_id}",
+    response={200: UnitByIdOut, 404: ErrorOut},
+    summary="Get a unit by ID",
+)
 def get_unit(request, unit_id: int):
-    return _unit_with_levels(unit_id)
+    try:
+        return _unit_with_levels(unit_id)
+    except Unit.DoesNotExist:
+        return Status(404, {"detail": "Unit not found."})
 
 
 @router.patch(
