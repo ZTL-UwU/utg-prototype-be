@@ -11,12 +11,7 @@ from apps.game.schemas import (
     UnitByLayerOut,
     UnitOut,
 )
-
-
-def assert_matches_schema(item: dict, schema):
-    # schema validation helper
-    schema.model_validate(item)
-    assert item.keys() == schema.model_fields.keys()
+from apps.game.test.helpers import assert_matches_schema
 
 
 ### /units/list

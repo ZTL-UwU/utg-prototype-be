@@ -24,8 +24,14 @@ def admin(db): # creates supseruser with every perm
 
 @pytest.fixture
 def auth_headers(user):
-   
+
     token = RefreshToken.for_user(user).access_token
+    return {"HTTP_AUTHORIZATION": f"Bearer {token}"}
+
+@pytest.fixture
+def admin_headers(admin):
+
+    token = RefreshToken.for_user(admin).access_token
     return {"HTTP_AUTHORIZATION": f"Bearer {token}"}
 
 @pytest.fixture

@@ -1,13 +1,6 @@
 ## tests for every PUT (reorder) endpoint for /units
 
-import json
-
-
-def put(client, url, payload, headers=None):
-    # client put helper
-    return client.put(
-        url, data=json.dumps(payload), content_type="application/json", **(headers or {})
-    )
+from apps.game.test.helpers import put
 
 
 ### /units/{unit_id}/levels/order  (reorder_levels)
